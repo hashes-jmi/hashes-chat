@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "description": "chat app for HASHes",
   "dependencies": {
-    "express": "^4.15.2",
+    "express": "^4.16.3",
     "pg": "^7.4.3",
-    "socket.io": "^1.7.3"
+    "socket.io": "^2.1.1"
   },
   "scripts": {
     "start": "node index.js"
