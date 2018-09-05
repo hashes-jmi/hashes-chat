@@ -1,18 +1,56 @@
-<!doctype html>
-<html>
-  <head>
-    <title>Socket.IO chat</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href="/public/style.css">
-  </head>
-  <body>
-    <ul id="messages"></ul>
-    <form action="">
-      <input id="nick" autocomplete="off" />
-      <input id="body" autocomplete="off" /><button>Send</button>
-    </form>
-    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-    <script src="/public/client.js"></script>
-  </body>
+    <title>Document</title>
+</head>
+<body>
+   <div class="head">
+       <h1 class="title">HASHes</h1>
+       <h2 class="subtitle">chat</h2>
+       <p class="social buttons is-centered">
+        <a href="https://www.facebook.com/HASHesJMI/" class="button">
+            <span class="fab fa-facebook"></span>
+        </a>
+        <a href="https://hashes-jmi.slack.com" class="button">
+            <span class="fab fa-slack"></span>
+        </a>
+        <a href="https://www.linkedin.com/in/hashes-jmi/" class="button">
+            <span class="fab fa-linkedin"></span>
+        </a>
+        <a href="https://github.com/hashes-jmi" class="button">
+            <span class="fab fa-github"></span>
+        </a>
+        <a href="https://hashes-jmi.github.io" class="button">
+            <span class="fas fa-external-link-alt"></span>
+        </a>
+       </p>
+   </div>
+
+   <div class="channels container">
+    <h1 class="title">
+        Channels
+    </h1>
+    <h2 class="subtitle">
+        More coming soon!
+    </h2>
+    <br>
+
+    <div class="tile is-ancestor">
+        <div class="tile is-4 is-parent">
+            <div class="tile is-child notification is-danger">
+                <p class="title">#general</p>
+                <p>
+                    One place to have all your conversations.
+                </p>
+                <br>
+                <a href="/chat" class="button is-warning is-pulled-right">Go</a>
+            </div>
+        </div>
+    </div>
+   </div>
+</body>
 </html>

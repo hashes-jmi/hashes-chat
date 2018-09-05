@@ -1,7 +1,7 @@
 {
-  "name": "socket-chat-example",
+  "name": "HASHes-chat",
   "version": "0.0.1",
-  "description": "my first socket.io app",
+  "description": "chat app for HASHes",
   "dependencies": {
     "express": "^4.15.2",
     "pg": "^7.4.3",

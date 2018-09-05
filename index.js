@@ -1,5 +1,6 @@
 let express = require('express');
 let port = process.env.PORT || 3000;
+const path = require('path');
 
 let app = express();
 let http = require('http').Server(app);
@@ -9,8 +10,12 @@ const db = require('./db');
 // folder for static files
 app.use('/public', express.static(__dirname + '/public'));
 
-app.get('/', function(req, res){
-  res.sendFile(__dirname + '/index.html');
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+app.get('/chat', function(req, res){
+  res.sendFile(path.join(__dirname, 'chat.html'));
 });
 
 io.on('connection', function(socket){
@@ -20,13 +25,10 @@ io.on('connection', function(socket){
       if (err) {
         console.error(err);
       }
-      else {
-        console.log(res);
-      }
     });
   });
 });
 
 http.listen(port, function(){
-  console.log('listening on *:' + port);
+  console.log('listening on localhost:' + port);
 });

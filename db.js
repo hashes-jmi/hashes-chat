@@ -13,11 +13,7 @@ function insertQuery(msg) {
     let sender = msg.sender;
     let timestamp = msg.created_at;
 
-    [body, sender, timestamp].forEach((child) => {
-        if (typeof(child) != String) {
-            return Error(`${child} must be string`);
-        }
-    });
+    // TODO: Add code to prevent SQL injection
 
     let queryString = `insert into messages \
     (body, sender, created_at) \
