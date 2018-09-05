@@ -7,8 +7,22 @@
   <body>
     <ul id="messages"></ul>
     <form action="">
-      <input id="nick" autocomplete="off" />
-      <input id="body" autocomplete="off" /><button>Send</button>
+      <div class="columns">
+        <div class="column is-one-fifth">
+          <input placeholder="nickname" class="input" id="nick" autocomplete="off" />
+        </div>
+        <div class="column">
+          <div class="columns">
+            <div class="column is-four-fifths">
+              <input placeholder="enter message" class="input" id="body" autocomplete="off" />
+            </div>
+            <div class="column">
+              <button class="button is-warning">Send</button>
+            </div>
+          </div>
+        </div>
+        
+      </div>
     </form>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
