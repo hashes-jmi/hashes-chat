@@ -9,24 +9,24 @@
     <form action="">
       <div class="columns">
         <div class="column is-one-fifth">
-          <input placeholder="nickname" class="input" id="nick" autocomplete="off" />
+          <input name="nick" placeholder="nickname" class="input" id="nick" autocomplete="off" />
         </div>
         <div class="column">
           <div class="columns">
             <div class="column is-four-fifths">
-              <input placeholder="enter message" class="input" id="body" autocomplete="off" />
+              <input name="body" placeholder="enter message" class="input" id="body" autocomplete="off" />
             </div>
             <div class="column">
-              <button class="button is-warning">Send</button>
+              <button class="button is-link" type="submit">Send</button>
             </div>
           </div>
         </div>
-        
       </div>
     </form>
-    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
     <script src="/public/client.js"></script>
+    <script src="/public/ui.js"></script>
   </body>
 </html>
