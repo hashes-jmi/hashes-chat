@@ -4,7 +4,11 @@
   "description": "chat app for HASHes",
   "dependencies": {
     "express": "^4.16.3",
+    "passport": "^0.4.0",
+    "passport-google-oauth": "^1.0.0",
     "pg": "^7.4.3",
+    "sequelize": "^4.38.0",
+    "sequelize-cli": "^4.1.1",
     "socket.io": "^2.1.1"
   },
   "scripts": {
