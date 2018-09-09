@@ -1,6 +1,7 @@
 let express = require('express');
 let port = process.env.PORT || 3000;
 const path = require('path');
+let cons = require('consolidate');
 let passport = require('passport');
 let GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
@@ -9,6 +10,34 @@ let http = require('http').Server(app);
 let io = require('socket.io')(http);
 let db = require('./models/index');
 let User = require('./models/user')(db.sequelize, db.Sequelize);
+
+// Initialize Passport and restore authentication state, if any, from the
+// session.
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Configure Passport authenticated session persistence.
+//
+// In order to restore authentication state across HTTP requests, Passport needs
+// to serialize users into and deserialize users out of the session.  In a
+// production-quality application, this would typically be as simple as
+// supplying the user ID when serializing, and querying the user record by ID
+// from the database when deserializing.  However, due to the fact that this
+// example does not have a database, the complete Facebook profile is serialized
+// and deserialized.
+passport.serializeUser(function (user, cb) {
+  cb(null, user);
+});
+
+passport.deserializeUser(function (obj, cb) {
+  cb(null, obj);
+});
+
+// set templating engine
+app.engine('html', cons.ejs);
+// set .html as default extension
+app.set('view engine', 'html');
+app.set('views', __dirname + '/views');
 
 // folder for static files
 app.use('/public', express.static(__dirname + '/public'));
@@ -30,14 +59,14 @@ passport.use(new GoogleStrategy({
         avatarUrl: profile.photos[0].value
       } 
     })
-    .spread((err, user, created) => {
-      return done(err, user);
+    .spread((user, created) => {
+      return done(null, user);
     })
   }
 ));
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.render('index', {});
 });
 
 // GET /auth/google
@@ -51,8 +80,7 @@ app.get('/auth/google',
 // GET /auth/google/callback
 //   Use passport.authenticate() as route middleware to authenticate the
 //   request.  If authentication fails, the user will be redirected back to the
-//   login page.  Otherwise, the primary route function function will be called,
-//   which, in this example, will redirect the user to the home page.
+//   login page.  Otherwise, the primary route function function will be called
 app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
   function (req, res) {
@@ -60,7 +88,9 @@ app.get('/auth/google/callback',
   });
 
 app.get('/chat', function(req, res){
-  res.sendFile(path.join(__dirname, 'chat.html'));
+  res.render('chat', {
+    user: req.user
+  })
 });
 
 io.on('connection', function(socket){
