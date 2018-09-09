@@ -10,6 +10,13 @@ let http = require('http').Server(app);
 let io = require('socket.io')(http);
 let db = require('./models/index');
 let User = require('./models/user')(db.sequelize, db.Sequelize);
+let Message = require('./models/message')(db.sequelize, db.Sequelize);
+
+app.use(require('express-session')({ 
+  secret: process.env.SESSION_SECRET,
+  resave: true,
+  saveUninitialized: true
+}));
 
 // Initialize Passport and restore authentication state, if any, from the
 // session.
@@ -87,10 +94,12 @@ app.get('/auth/google/callback',
     res.redirect('/chat');
   });
 
-app.get('/chat', function(req, res){
-  res.render('chat', {
-    user: req.user
-  })
+app.get('/chat',
+  require('connect-ensure-login').ensureLoggedIn('/auth/google'),
+  function(req, res){
+    res.render('chat', {
+      user: req.user
+    });
 });
 
 io.on('connection', function(socket){

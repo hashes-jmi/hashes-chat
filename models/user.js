@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     avatarUrl: DataTypes.STRING
   }, {});
   User.associate = function(models) {
-    // associations can be defined here
+    User.hasMany(models.Message);
   };
   return User;
 };
