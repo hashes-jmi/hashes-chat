@@ -4,20 +4,6 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-form {
-    background: #ffffffef;
-    padding: 3px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}
-
-form input {
-    border: 0;
-    padding: 10px;
-    margin-right: .5%;
-}
-form button { background: rgb(130, 224, 255); border: none; padding: 10px; }
 #messages { 
     list-style-type: none; 
     margin: 0; 
@@ -59,6 +45,16 @@ form button { background: rgb(130, 224, 255); border: none; padding: 10px; }
     .container {
         padding: inherit;
     }
+}
+
+@media screen and (max-width: 767px) {
+    #chatbar .navbar-brand {
+        display: none;
+    }
+}
+
+#nick #user-id {
+    display: none;
 }
 
 .account {

@@ -3,8 +3,7 @@ $(function () {
     $('form').submit(() => {
         let message = {
             body: $('#body').val(),
-            sender: $('#nick').val(),
-            created_at: moment().format('YYYY-MM-DD HH:mm:ss.SSSSSS')
+            sender: +$('#user-id').html()
         }
         socket.emit('chat message', message);
         $('#body').val('');
