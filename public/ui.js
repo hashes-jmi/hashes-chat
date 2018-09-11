@@ -26,3 +26,12 @@ function msgElement(msg) {
 
     return media;
 }
+
+function errorElement(errMsg) {
+    let notif = $('<div>', {
+        class: 'notification is-warning'
+    });
+    notif.text(errMsg);
+
+    return notif;
+}

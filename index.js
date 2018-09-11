@@ -124,10 +124,10 @@ io.on('connection', function(socket){
     })
     // catch all errors
     .catch(err => {
-      console.error(err);
+      console.error('ERROR: ' + err.name);
+      // change errorMessage to something more appropriate
       let errorMessage = 
-      'There was an error in the connection, \
-      try refreshing the page';
+      'There was an error sending a message: \n' + err.name;
       io.emit('error message', errorMessage);
     });
   });
