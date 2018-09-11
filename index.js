@@ -104,11 +104,31 @@ app.get('/chat',
 
 io.on('connection', function(socket){
   socket.on('chat message', function(msg){
-    io.emit('chat message', msg);
-    pool.query(db.insertQuery(msg), (err, res) => {
-      if (err) {
-        console.error(err);
-      }
+    // push message to db
+    Message.build({
+      body: msg.body,
+      UserId: msg.sender
+    })
+    .save()
+    // execute promise when there are no errors
+    .then(() => {
+      // get mame of user who has sent the message
+      User.findById(msg.sender)
+      .then((user) => {
+        io.emit('chat message', {
+          body: msg.body,
+          sender: msg.sender,
+          senderName: user.name
+        });
+      });
+    })
+    // catch all errors
+    .catch(err => {
+      console.error(err);
+      let errorMessage = 
+      'There was an error in the connection, \
+      try refreshing the page';
+      io.emit('error message', errorMessage);
     });
   });
 });

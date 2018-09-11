@@ -1,5 +1,6 @@
 $(function () {
     var socket = io();
+    
     $('form').submit(() => {
         let message = {
             body: $('#body').val(),
@@ -9,8 +10,14 @@ $(function () {
         $('#body').val('');
         return false;
     });
+
     socket.on('chat message', function (msg) {
         $('#messages').append(msgElement(msg));
         window.scrollTo(0, document.body.scrollHeight);
     });
+
+    socket.on('error message', errMsg => {
+        $('#messages').append(errorElement(errMsg));
+        window.scrollTo(0, document.body.scrollHeight);
+    })
 });

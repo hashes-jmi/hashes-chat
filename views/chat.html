@@ -11,17 +11,22 @@
           <img class="image" src="<%= user.avatarUrl %>">
            &emsp;
           <strong><%= user.name %></strong>
-          <a id="user-id"><%= user.id %></a>
+          <div class="hidden-profile">
+            <a id="user-id"><%= user.id %></a>
+            <a id="user-avatar"><%= user.avatarUrl %></a>
+          </div>
         </div>
       </div>
       
       <div class="navbar-end">
-        <div class="navbar-item">
-          <input name="body" placeholder="enter message" class="input" id="body" autocomplete="off" />
-        </div>
-        <div class="navbar-item">
-            <button class="button is-link" type="submit">Send</button>
-        </div>
+        <form>
+          <div class="navbar-item">
+            <input name="body" placeholder="enter message" class="input" id="body" autocomplete="off" />
+          </div>
+          <div class="navbar-item">
+              <button class="button is-link" type="submit">Send</button>
+          </div>
+        </form>
       </div>
     </nav>
     <ul id="messages"></ul>

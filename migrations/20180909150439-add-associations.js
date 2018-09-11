@@ -8,6 +8,7 @@ module.exports = {
      'UserId', // name of the key we're adding
      {
        type: Sequelize.INTEGER,
+       allowNull: false,
        references: {
          model: 'Users',
          key: 'id',

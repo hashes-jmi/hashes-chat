@@ -53,7 +53,7 @@
     }
 }
 
-#nick #user-id {
+.hidden-profile {
     display: none;
 }
 
