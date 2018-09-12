@@ -106,7 +106,27 @@ app.get('/chat',
     });
 });
 
-io.on('connection', function(socket){
+io.on('connection', function(socket) {
+  // load all messages from db and broadcase
+  Message.findAll({
+    attributes: ['body', 'UserId']
+  })
+  .then(messages => {
+    messages.forEach(msg => {
+      // build message object
+      let msgObj = {
+        body: msg.dataValues.body,
+        sender: msg.dataValues.UserId
+      }
+
+      User.findById(msgObj.sender)
+      .then(user => {
+        msgObj.senderName = user.name;
+        socket.emit('chat message', msgObj);
+      });
+    });
+  });
+
   socket.on('chat message', function(msg){
     // push message to db
     Message.build({
