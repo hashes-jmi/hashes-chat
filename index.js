@@ -8,9 +8,13 @@ let GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 let app = express();
 let http = require('http').Server(app);
 let io = require('socket.io')(http);
+
+// Database and models stuff
 let db = require('./models/index');
 let User = require('./models/user')(db.sequelize, db.Sequelize);
 let Message = require('./models/message')(db.sequelize, db.Sequelize);
+Message.User = Message.belongsTo(User);
+User.Messages = User.hasMany(Message);
 
 app.use(require('express-session')({ 
   secret: process.env.SESSION_SECRET,
@@ -108,6 +112,10 @@ io.on('connection', function(socket){
     Message.build({
       body: msg.body,
       UserId: msg.sender
+    }, {
+      include: [{
+        association: Message.User
+      }]
     })
     .save()
     // execute promise when there are no errors

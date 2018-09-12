@@ -21,13 +21,17 @@
 
 .tile .is-child {
     display: inline-block;
-    box-shadow: rgba(0, 0, 0, 0.1) 0 10px 2rem;
+    /* box-shadow: rgba(0, 0, 0, 0.1) 0 10px 2rem; */
     transition: all 0.15s ease-out;
+}
+
+.channel .is-danger {
+    box-shadow: #ff386055 0 10px 2rem;
 }
 
 .tile .is-child:hover {
     transform: scale(1.03);
-    box-shadow: rgba(0, 0, 0, 0.2) 0 10px 2.5rem;
+    box-shadow: #ff3860ef 0 10px 2.5rem;
 }
 
 .container {
