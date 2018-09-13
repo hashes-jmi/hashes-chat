@@ -17,6 +17,6 @@
   },
   "scripts": {
     "db:migrate": "sequelize db:migrate",
-    "start": "npm run migrate && node index.js"
+    "start": "npm run db:migrate && node index.js"
   }
 }
