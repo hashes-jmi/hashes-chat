@@ -16,6 +16,7 @@
     "socket.io": "^2.1.1"
   },
   "scripts": {
-    "start": "node index.js"
+    "db:migrate": "sequelize db:migrate",
+    "start": "npm run migrate && node index.js"
   }
 }
