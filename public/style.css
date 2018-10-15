@@ -4,23 +4,9 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-form {
-    background: #ffffffef;
-    padding: 3px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}
-
-form input {
-    border: 0;
-    padding: 10px;
-    margin-right: .5%;
-}
-form button { background: rgb(130, 224, 255); border: none; padding: 10px; }
 #messages { 
     list-style-type: none; 
-    margin: 0; 
+    margin: 0 0 2rem 0; 
     padding: 0;
 }
 
@@ -35,13 +21,17 @@ form button { background: rgb(130, 224, 255); border: none; padding: 10px; }
 
 .tile .is-child {
     display: inline-block;
-    box-shadow: rgba(0, 0, 0, 0.1) 0 10px 2rem;
+    /* box-shadow: rgba(0, 0, 0, 0.1) 0 10px 2rem; */
     transition: all 0.15s ease-out;
+}
+
+.channel .is-danger {
+    box-shadow: #ff386055 0 10px 2rem;
 }
 
 .tile .is-child:hover {
     transform: scale(1.03);
-    box-shadow: rgba(0, 0, 0, 0.2) 0 10px 2.5rem;
+    box-shadow: #ff3860ef 0 10px 2.5rem;
 }
 
 .container {
@@ -59,6 +49,16 @@ form button { background: rgb(130, 224, 255); border: none; padding: 10px; }
     .container {
         padding: inherit;
     }
+}
+
+@media screen and (max-width: 767px) {
+    #chatbar .navbar-brand {
+        display: none;
+    }
+}
+
+.hidden-profile {
+    display: none;
 }
 
 .account {

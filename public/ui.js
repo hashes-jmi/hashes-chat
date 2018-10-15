@@ -6,14 +6,6 @@ function msgElement(msg) {
     let mediaLeft = $('<figure>', {
         class: 'media-left'
     });
-    let imageHolder = $('<p>', {
-        class: 'image is-64x64'
-    });
-    let image = $('<img>', {
-        src: "https://bulma.io/images/placeholders/128x128.png"
-    });
-    imageHolder.append(image);
-    mediaLeft.append(imageHolder);
     media.append(mediaLeft);
 
     let mediaContent = $('<div>', {
@@ -24,7 +16,7 @@ function msgElement(msg) {
     });
     let paragraph = $('<p>');
     let name = $('<strong>');
-    name.text(msg.sender);
+    name.text(msg.senderName);
     paragraph.append(name);
     paragraph.append($('<br>'));
     paragraph.append(msg.body);
@@ -33,4 +25,13 @@ function msgElement(msg) {
     media.append(mediaContent);
 
     return media;
+}
+
+function errorElement(errMsg) {
+    let notif = $('<div>', {
+        class: 'notification is-warning'
+    });
+    notif.text(errMsg);
+
+    return notif;
 }
