@@ -86,7 +86,7 @@ app.get("/", (req, res) => {
 //   redirecting the user to google.com.  After authorization, Google
 //   will redirect the user back to this application at /auth/google/callback
 app.get('/auth/google',
-  passport.authenticate('google', { scope: ['email', 'profile'] }));
+  passport.authenticate('google', { scope: ['profile'] }));
 
 // GET /auth/google/callback
 //   Use passport.authenticate() as route middleware to authenticate the
