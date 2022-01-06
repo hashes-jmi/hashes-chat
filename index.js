@@ -63,6 +63,7 @@ passport.use(new GoogleStrategy({
   callbackURL: "https://hashes-chat.herokuapp.com/auth/google/callback"
 },
   function (issuer, profile, done) {
+    console.log(JSON.stringify(profile));
     User.findOrCreate({
       where: {
         email: profile.emails[0].value,
