@@ -6,8 +6,8 @@ let GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 //   credentials (in this case, a token, tokenSecret, and Google profile), and
 //   invoke a callback with a user object.
 passport.use(new GoogleStrategy({
-    consumerKey: GOOGLE_CONSUMER_KEY,
-    consumerSecret: GOOGLE_CONSUMER_SECRET,
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: "http://www.example.com/auth/google/callback"
 },
     function (token, tokenSecret, profile, done) {
