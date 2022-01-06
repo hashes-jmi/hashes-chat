@@ -16,7 +16,7 @@ let Message = require('./models/message')(db.sequelize, db.Sequelize);
 Message.User = Message.belongsTo(User);
 User.Messages = User.hasMany(Message);
 
-app.use(require('express-session')({ 
+app.use(require('express-session')({
   secret: process.env.SESSION_SECRET,
   resave: true,
   saveUninitialized: true
@@ -60,7 +60,7 @@ app.use('/public', express.static(__dirname + '/public'));
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: "/auth/google/callback"
+  callbackURL: "https://hashes-chat.herokuapp.com/auth/google/callback"
 },
   function (accessToken, refreshToken, profile, done) {
     User.findOrCreate({
@@ -68,11 +68,11 @@ passport.use(new GoogleStrategy({
         email: profile.emails[0].value,
         name: profile.displayName,
         avatarUrl: profile.photos[0].value
-      } 
+      }
     })
-    .spread((user, created) => {
-      return done(null, user);
-    })
+      .spread((user, created) => {
+        return done(null, user);
+      })
   }
 ));
 
@@ -100,34 +100,34 @@ app.get('/auth/google/callback',
 
 app.get('/chat',
   require('connect-ensure-login').ensureLoggedIn('/auth/google'),
-  function(req, res){
+  function (req, res) {
     res.render('chat', {
       user: req.user
     });
-});
+  });
 
-io.on('connection', function(socket) {
+io.on('connection', function (socket) {
   // load all messages from db and broadcase
   Message.findAll({
     attributes: ['body', 'UserId']
   })
-  .then(messages => {
-    messages.forEach(msg => {
-      // build message object
-      let msgObj = {
-        body: msg.dataValues.body,
-        sender: msg.dataValues.UserId
-      }
+    .then(messages => {
+      messages.forEach(msg => {
+        // build message object
+        let msgObj = {
+          body: msg.dataValues.body,
+          sender: msg.dataValues.UserId
+        }
 
-      User.findById(msgObj.sender)
-      .then(user => {
-        msgObj.senderName = user.name;
-        socket.emit('chat message', msgObj);
+        User.findById(msgObj.sender)
+          .then(user => {
+            msgObj.senderName = user.name;
+            socket.emit('chat message', msgObj);
+          });
       });
     });
-  });
 
-  socket.on('chat message', function(msg){
+  socket.on('chat message', function (msg) {
     // push message to db
     Message.build({
       body: msg.body,
@@ -137,30 +137,30 @@ io.on('connection', function(socket) {
         association: Message.User
       }]
     })
-    .save()
-    // execute promise when there are no errors
-    .then(() => {
-      // get mame of user who has sent the message
-      User.findById(msg.sender)
-      .then((user) => {
-        io.emit('chat message', {
-          body: msg.body,
-          sender: msg.sender,
-          senderName: user.name
-        });
+      .save()
+      // execute promise when there are no errors
+      .then(() => {
+        // get mame of user who has sent the message
+        User.findById(msg.sender)
+          .then((user) => {
+            io.emit('chat message', {
+              body: msg.body,
+              sender: msg.sender,
+              senderName: user.name
+            });
+          });
+      })
+      // catch all errors
+      .catch(err => {
+        console.error('ERROR: ' + err.name);
+        // change errorMessage to something more appropriate
+        let errorMessage =
+          'There was an error sending a message: \n' + err.name;
+        io.emit('error message', errorMessage);
       });
-    })
-    // catch all errors
-    .catch(err => {
-      console.error('ERROR: ' + err.name);
-      // change errorMessage to something more appropriate
-      let errorMessage = 
-      'There was an error sending a message: \n' + err.name;
-      io.emit('error message', errorMessage);
-    });
   });
 });
 
-http.listen(port, function(){
+http.listen(port, function () {
   console.log('listening on localhost:' + port);
 });
