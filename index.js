@@ -3,7 +3,7 @@ let port = process.env.PORT || 3000;
 const path = require('path');
 let cons = require('consolidate');
 let passport = require('passport');
-let GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+let GoogleStrategy = require('passport-google-oidc');
 
 let app = express();
 let http = require('http').Server(app);
