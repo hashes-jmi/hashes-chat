@@ -85,14 +85,14 @@ app.get("/", (req, res) => {
 //   request.  The first step in Google authentication will involve
 //   redirecting the user to google.com.  After authorization, Google
 //   will redirect the user back to this application at /auth/google/callback
-app.get('/login/google',
+app.get('/auth/google',
   passport.authenticate('google', { scope: ['email', 'profile'] }));
 
 // GET /auth/google/callback
 //   Use passport.authenticate() as route middleware to authenticate the
 //   request.  If authentication fails, the user will be redirected back to the
 //   login page.  Otherwise, the primary route function function will be called
-app.get('/oauth2/redirect/accounts.google.com',
+app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
   function (req, res) {
     res.redirect('/chat');
