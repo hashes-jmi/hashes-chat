@@ -3,7 +3,7 @@ let port = process.env.PORT || 3000;
 const path = require('path');
 let cons = require('consolidate');
 let passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const GoogleStrategy = require('passport-google-oidc');
 
 let app = express();
 let http = require('http').Server(app);
@@ -62,12 +62,13 @@ passport.use(new GoogleStrategy({
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
   callbackURL: "https://hashes-chat.herokuapp.com/auth/google/callback"
 },
-  function (accessToken, refreshToken, profile, done) {
+  function (issuer, profile, done) {
+    console.log(JSON.stringify(profile));
     User.findOrCreate({
       where: {
         email: profile.emails[0].value,
         name: profile.displayName,
-        avatarUrl: profile.photos[0].value
+        avatarUrl: undefined
       }
     })
       .spread((user, created) => {
@@ -86,14 +87,14 @@ app.get("/", (req, res) => {
 //   redirecting the user to google.com.  After authorization, Google
 //   will redirect the user back to this application at /auth/google/callback
 app.get('/auth/google',
-  passport.authenticate('google', { scope: ['profile'] }));
+  passport.authenticate('google', { scope: ['email', 'profile'] }));
 
 // GET /auth/google/callback
 //   Use passport.authenticate() as route middleware to authenticate the
 //   request.  If authentication fails, the user will be redirected back to the
 //   login page.  Otherwise, the primary route function function will be called
 app.get('/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/', failureMessage: true }),
+  passport.authenticate('google', { failureRedirect: '/' }),
   function (req, res) {
     res.redirect('/chat');
   });
