@@ -3,7 +3,7 @@ let port = process.env.PORT || 3000;
 const path = require('path');
 let cons = require('consolidate');
 let passport = require('passport');
-let GoogleStrategy = require('passport-google-oidc');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 let app = express();
 let http = require('http').Server(app);
@@ -62,7 +62,7 @@ passport.use(new GoogleStrategy({
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
   callbackURL: "https://hashes-chat.herokuapp.com/auth/google/callback"
 },
-  function (issuer, profile, done) {
+  function (accessToken, refreshToken, profile, done) {
     console.log(JSON.stringify(profile));
     User.findOrCreate({
       where: {
